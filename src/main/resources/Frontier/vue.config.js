@@ -31,7 +31,7 @@ module.exports = {
                 target: 'https://39.106.131.88'
             },
         },
-        https:true
+        // https:true
     },
     configureWebpack: {
         plugins: [

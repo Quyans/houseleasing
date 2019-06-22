@@ -18,24 +18,24 @@ let vue = new Vue({
 
 Notification.requestPermission()
 
-
-let worker = new checkingListenerWorker()
-worker.onmessage = e=>{
-    let hasJustOpenedCheckList = e.data
-    console.log(hasJustOpenedCheckList)
-
-    let notificationMessage = ''
-    if (hasJustOpenedCheckList.length > 1) {
-        notificationMessage = `您有${hasJustOpenedCheckList.length}个群组待签到`
-    } else {
-        notificationMessage = `您加入的群组 ${hasJustOpenedCheckList[0].groupName} 正在签到`
-    }
-    try {
-        new Notification(notificationMessage)
-    } catch (e) {
-        navigator.serviceWorker.ready.then((registration)=>{
-            registration.showNotification(notificationMessage)
-        })
-    }
-    vue.$message.info(notificationMessage)
-}
+//
+// let worker = new checkingListenerWorker()
+// worker.onmessage = e=>{
+//     let hasJustOpenedCheckList = e.data
+//     console.log(hasJustOpenedCheckList)
+//
+//     let notificationMessage = ''
+//     if (hasJustOpenedCheckList.length > 1) {
+//         notificationMessage = `您有${hasJustOpenedCheckList.length}个群组待签到`
+//     } else {
+//         notificationMessage = `您加入的群组 ${hasJustOpenedCheckList[0].groupName} 正在签到`
+//     }
+//     try {
+//         new Notification(notificationMessage)
+//     } catch (e) {
+//         navigator.serviceWorker.ready.then((registration)=>{
+//             registration.showNotification(notificationMessage)
+//         })
+//     }
+//     vue.$message.info(notificationMessage)
+// }

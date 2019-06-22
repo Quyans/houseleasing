@@ -1,6 +1,6 @@
 <template>
     
-    <div :style="pcOrPhone?this.notePc:this.note" id="test" style="height: 100%;min-height: 550px">
+    <div :style="pcOrPhone?this.notePc:this.note" id="test" style="height: 100%;">
         <div style="height: 100% ;background-color: rgba(0,0,0,0.47);color: white">
 
             <div style="width: 80% ;margin: 0 auto; padding-top: 10vh">
@@ -53,7 +53,7 @@
                 note: {
                     backgroundImage: "url(" + require("../../../../image/login_back.png") + ")",
                     backgroundRepeat: "no-repeat",
-                    height: '100%',
+                    // height: '100%',
                     backgroundSize: '100% 100%'
                 },
                 notePc:{

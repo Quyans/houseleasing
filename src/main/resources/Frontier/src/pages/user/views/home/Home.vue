@@ -1,40 +1,22 @@
 <template>
-    <div class="home">
-        <my-header/>
-        <el-form>
-            <el-form-item>
-                <el-input type="text" v-model="searchId" placeholder="输入群组口令">
-                    <el-button slot="append" icon="el-icon-search" @click="searchButtonHandler"></el-button>
-                    <el-button slot="append" @click="handleIconScanClick">
-                        <img class="icon_scan" src="@/assets/icon_scan.png">
-                    </el-button>
-                </el-input>
-            </el-form-item>
-        </el-form>
-        <section class="main">
-            <today-schedule-table/>
-            <group-joined-list/>
-        </section>
-        <q-r-code-scanner @close="isScanningQRCode=false" @detected="handleDetectedQRCode" v-if="isScanningQRCode"/>
+    <div class="home" :style="note"  >
+        <div   class="sub_home" :style="sub_note" style="">
+                <MyTitle></MyTitle>
+        </div>
+
     </div>
 </template>
 
 <script>
-    import TodayScheduleTable from "./components/TodayScheduleList";
-    import GroupJoinedList from "./components/GroupJoinedList";
-    import MyHeader from "../../../../components/MyHeader";
-    import Icon from "@/components/Icon";
-    import QRCodeScanner from "@/components/QRCodeScanner";
-    import {getGroupInfo} from "@/resource/group";
 
+    import Icon from "@/components/Icon";
+    import {getGroupInfo} from "@/resource/group";
+    import MyTitle from "./components/MyTitle"
     export default {
         name: 'home',
         components: {
-            QRCodeScanner,
             Icon,
-            MyHeader,
-            GroupJoinedList,
-            TodayScheduleTable
+            MyTitle
         },
         created() {
         },
@@ -42,67 +24,67 @@
             return {
                 BASE_URL: process.env.BASE_URL,
                 searchId: '',
-                isScanningQRCode: false
-            }
-        },
-        methods: {
-            searchButtonHandler() {
-                if (!this.searchId || this.searchId && this.searchId.length === 0) {
-                    this.$alert('群组ID不可为空')
-                    return
-                }
-                getGroupInfo(this.searchId).then(
-                    () => {
-                        this.$message.success(`正在跳转`)
-                        this.$router.push(`/group/${this.searchId}`)
-                    },
-                    e => {
-                        if (e.status === 202) {
-                            this.$message.error(`群组：${this.searchId} 不存在`)
-                        } else {
-                            this.$message.error(`未知错误：${e.message}`)
-                        }
-                    }
-                )
-            },
-            handleIconScanClick() {
-                this.isScanningQRCode = true
-            },
-            handleDetectedQRCode(content) {
-                if (!this.isScanningQRCode) {
-                    return
-                }
-                this.isScanningQRCode = false
-                // 判断content是否属于我们的
-                if (!content.match(/\/group\/[a-zA-Z0-9]+/i)) {
-                    this.$message.error(`检测到的内容：${content} 中不含群组信息`)
-                } else {
-                    this.$message.success(`检测到：${content}即将跳转到新的页面`)
-                    setTimeout(() => {
-                        location.href = content
-                    }, 2000)
+                isScanningQRCode: false,
+                note:{
+                    backgroundImage: "url(" + require("../../../../image/User/bk1.png") + ")",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: '100% 100%',
+                },
+                sub_note:{
+                    backgroundImage: "url(" + require("../../../../image/User/bk2.jpg") + ")",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: '100% 100%',
                 }
 
             }
+        },
+        methods: {
+
+
+
         }
     }
 </script>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
+
+</style>
 <style lang="scss" scoped>
     .home {
         section.main {
             padding: 0 1em;
         }
-
-        .icon_scan {
-            width: 14px;
-            height: 14px;
-            vertical-align: bottom;
-        }
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        /*.icon_scan {*/
+            /*width: 14px;*/
+            /*height: 14px;*/
+            /*vertical-align: bottom;*/
+        /*}*/
+    }
+    .sub_home{
+        position: relative;
+        margin: 0 auto;
+        top: 40px;
+        box-shadow:5px 5px 30px darkgrey;
+        min-height: 400px;
+        width: 80%;
     }
 </style>
 <style lang="scss">
     .el-dialog {
         width: 100% !important;
         max-width: 450px;
+    }
+    #app {
+        height: 100%;
     }
 </style>

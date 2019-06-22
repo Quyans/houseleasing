@@ -27,6 +27,13 @@
 </script>
 
 <style scoped lang="scss">
+    html {
+        height: 100%;
+    }
 
+    body {
+        height: 100%;
+        margin: 0;
+    }
 
 </style>
